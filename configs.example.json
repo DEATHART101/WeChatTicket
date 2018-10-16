@@ -6,7 +6,7 @@
   "WECHAT_APPID": "PleaseCopyFromWebsite",
   "WECHAT_SECRET": "PleaseCopyFromWebsite",
   "DB_NAME": "wechat_ticket",
-  "DB_USER": "root",
+  "DB_USER": "roo",
   "DB_PASS": "",
   "DB_HOST": "127.0.0.1",
   "DB_PORT": "3306",
