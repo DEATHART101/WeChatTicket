@@ -27,6 +27,31 @@ class Logout(APIView):
         auth.logout(self.request)
 
 
+class ActivityListShow(APIView):
+    def get(self):
+        if not self.request.user.is_authenticated():
+            raise ValidateError("Fail to get information, you must login first!")
+
+        activity_list = models.Activity.objects.exclude(status__lt=0)
+
+        activity_details = []
+        for activity in activity_list:
+            activity_item = {
+                "id": activity.id,
+                "name": activity.name,
+                "description": activity.description,
+                "startTime": activity.start_time.timestamp(),
+                "endTime": activity.end_time.timestamp(),
+                "place": activity.place,
+                "bookStart": activity.book_start.timestamp(),
+                "bookEnd": activity.book_end.timestamp(),
+                "status": activity.status
+            }
+
+            activity_details.append(activity_item)
+        return activity_details
+
+
 class ActivityAdd(APIView):
     def post(self):
         if not self.request.user.is_authenticated():
