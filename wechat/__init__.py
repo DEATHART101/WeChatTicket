@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 import pymysql
-=======
+
 import  pymysql
->>>>>>> user
+
+import  pymysql
 pymysql.install_as_MySQLdb()
