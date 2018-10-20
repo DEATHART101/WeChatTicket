@@ -16,7 +16,7 @@ class User(models.Model):
 
 
 class Activity(models.Model):
-    id = models.CharField(max_length=64, unique=True, db_index=True)
+    id = models.CharField(max_length=64, unique=True, db_index=True, primary_key=True)
     name = models.CharField(max_length=128)
     key = models.CharField(max_length=64, db_index=True)
     description = models.TextField()
