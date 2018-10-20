@@ -33,7 +33,7 @@ class UserBind(APIView):
 
         reps = learn_session.post(post_url, post_data, headers = header)
 
-        if (len(reps._content > 100)):
+        if (len(reps._content) > 100):
             raise ValidateError("StuentID or Password incorrect")
 
     def get(self):
