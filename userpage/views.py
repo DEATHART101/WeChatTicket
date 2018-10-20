@@ -2,7 +2,9 @@ from codex.baseerror import *
 from codex.baseview import APIView
 import requests
 
-from wechat.models import User
+from wechat import models
+from wechat.models import *
+
 
 post_url = 'https://learn.tsinghua.edu.cn/MultiLanguage/lesson/teacher/loginteacher.jsp'
 
@@ -32,7 +34,7 @@ class UserBind(APIView):
         reps = learn_session.post(post_url, post_data, headers = header)
 
         if (len(reps._content > 100)):
-            raise ValidateError 
+            raise ValidateError("StuentID or Password incorrect")
 
     def get(self):
         self.check_input('openid')
@@ -49,8 +51,23 @@ class ActivityDetail(APIView):
     def get(self):
         self.check_input('openid')
         activity = Activity.get_by_activity_id(self.input['id'])
+        
         if activity.status == 1:
-            return acitity
+            item = {
+                "name": activity.name,
+                "key": activity.key,
+                "description": activity.description,
+                "startTime": activity.start_time.timestamp(),
+                "endTime": activity.end_time.timestamp(),
+                "place": activity.place,
+                "bookStart": activity.book_start.timestamp(),
+                "bookEnd": activity.book_end.timestamp(),
+                "totalTickets": activity.total_tickets,
+                "picUrl": activity.pic_url,
+                "remainTickets": activity.remain_tickets,
+                "currentTime": timezone.now().timestamp(),
+            }
+            return item
         else:
             return status
 
@@ -58,4 +75,15 @@ class TicketDetail(APIView):
     def get(self):
         self.check_input('openid')
         ticket = Ticket.get_by_unique_id(self.input['ticket'])
+        activity = ticket.activity
+        item = {
+            "name": activity.name,
+            "place": activity.place,
+            "activityKey": activity.key,
+            "uniqueId": ticket.unique_id,
+            "startTime": activity.start_time.timestamp(),
+            "endTime": activity.end_time.timestamp(),
+            "currentTime": timezone.now().timestamp(),
+            "status": ticket.status,
+        } 
         return ticket
