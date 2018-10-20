@@ -16,6 +16,7 @@ class User(models.Model):
 
 
 class Activity(models.Model):
+    id = models.CharField(max_length=64, unique=True, db_index=True)
     name = models.CharField(max_length=128)
     key = models.CharField(max_length=64, db_index=True)
     description = models.TextField()
@@ -33,13 +34,31 @@ class Activity(models.Model):
     STATUS_SAVED = 0
     STATUS_PUBLISHED = 1
 
+    @classmethod
+    def get_by_activity_id(cls, activity_id):
+        try:
+            return cls.objects.get(id = activity_id)
+        except cls.DoesNotExist:
+            raise LogicError('Activity not found')
+
 
 class Ticket(models.Model):
     student_id = models.CharField(max_length=32, db_index=True)
     unique_id = models.CharField(max_length=64, db_index=True, unique=True)
+<<<<<<< HEAD
     activity = models.ForeignKey(Activity,on_delete=models.CASCADE)
+=======
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+>>>>>>> user
     status = models.IntegerField()
 
     STATUS_CANCELLED = 0
     STATUS_VALID = 1
     STATUS_USED = 2
+
+    @classmethod
+    def get_by_unique_id(cls, unique_id):
+        try:
+            return cls.objects.get(unique_id = unique_id)
+        except:
+            raise LogicError('Ticket not found')
