@@ -47,7 +47,7 @@ class AdminLogin(APIView):
     def post(self):
 
         self.check_input("username", "password")
-        user = auth.authenticate(request=self.request, username=self.input["password"], password=self.input["username"])
+        user = auth.authenticate(request=self.request, username=self.input["username"], password=self.input["password"])
         if not user:
             raise ValidateError("用户名或密码错误，登录失败")
         else:
