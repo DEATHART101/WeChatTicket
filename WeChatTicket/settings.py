@@ -97,7 +97,7 @@ if not DEBUG:
     ]
 
 
-WSGI_APPLICATION = 'WeChatTicket.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
