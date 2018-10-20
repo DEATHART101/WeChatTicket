@@ -56,15 +56,15 @@ INSTALLED_APPS = [
     'userpage',
 ]
 
-MIDDLEWARE_CLASSES = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddliddleware',
+    'django.contrib.sessions.middleware.SessionMiddleddleware',
+    'django.middleware.common.CommonMiddlewdleware',
+    # 'django.middleware.csrf.CsrfViewMiddliddleware',
+    'django.contrib.auth.middleware.AuthenticatioationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleddleware',
+    'django.middleware.clickjacking.XFrameOptionsionsMiddleware',
 ]
 
 ROOT_URLCONF = 'WeChatTicket.urls'
