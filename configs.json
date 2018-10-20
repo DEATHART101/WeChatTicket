@@ -1,6 +1,6 @@
 {
   "SECRET_KEY": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
-  "DEBUG": true,
+  "DEBUG": false,
   "IGNORE_WECHAT_SIGNATURE": false,
   "WECHAT_TOKEN": "xqws2018",
   "WECHAT_APPID": "wx28bf6a62e1c54f3f",
