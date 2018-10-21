@@ -4,9 +4,6 @@ python:
 install: 
   - pip install django
 script:
-  - python --version
-  - python
-  - import django
-  - django.VERSION
+  - python django_check.py
 env:
   - DB = mysql
