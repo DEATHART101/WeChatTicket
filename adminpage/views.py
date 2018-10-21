@@ -1,12 +1,40 @@
+from django.shortcuts import render
 from codex.baseerror import *
 from codex.baseview import APIView
 from django.contrib import auth
-from wechat import models
-from wechat.models import *
+from wechat.models import Activity, Ticket
 from wechat.views import *
 from WeChatTicket import settings
 import urllib.parse
 import uuid
+
+
+class Upgrade_menu(APIView):
+     def get(self):
+        new_menu=[]
+        act_all=Activity.objects.all()
+        cur_t=int(time.time())
+        index=1
+        for item in act_all:
+            act_start=time.mktime(item.book_start.timetuple())
+            act_end = time.mktime(item.book_end.timetuple())
+            if act_start<cur_t and cur_t<act_end:
+                new_item={}
+                new_item['id']=item.id
+                new_item['name']=item.name
+                new_item['menuindex']=index
+                new_menu.append(new_item)
+                index +=1
+        return new_menu
+     def post(self):
+        self.check_input('id')
+        act_id=self.input
+        act_all=[]
+        for i in act_id:
+            act=Activity.objects.get(id=i)
+            act_all.append(act)
+        CustomWeChatView.update_menu(act_all)
+        return None 
 
 
 class AdminLogin(APIView):
@@ -21,7 +49,7 @@ class AdminLogin(APIView):
     def post(self):
 
         self.check_input("username", "password")
-        user = auth.authenticate(request=self.request, username=self.input["password"], password=self.input["username"])
+        user = auth.authenticate(request=self.request, username=self.input["username"], password=self.input["password"])
         if not user:
             raise ValidateError("用户名或密码错误，登录失败")
         else:
@@ -50,7 +78,7 @@ class ActivityList(APIView):
         if not self.request.user.is_authenticated():
             raise ValidateError("请先登录")
 
-        activity_list = models.Activity.objects.exclude(status__lt=0)
+        activity_list = Activity.objects.exclude(status__lt=0)
         activity_details = []
         try:
             for activity in activity_list:
@@ -81,7 +109,7 @@ class ActivityDelete(APIView):
         self.check_input("id")
         activity_id = self.input["id"]
         try:
-            models.Activity.objects.filter(id=activity_id).update(status=models.Activity.STATUS_DELETED)
+            Activity.objects.filter(id=activity_id).update(status=Activity.STATUS_DELETED)
         except:
             raise LogicError("活动删除失败")
         return 0
@@ -109,7 +137,7 @@ class ActivityCreate(APIView):
             status = self.input["status"]
             remainTickets = totalTickets
 
-            models.Activity.objects.create(
+            Activity.objects.create(
             name=name, key=key, place=place, description=description, pic_url=picUrl,
             start_time=startTime, end_time=endTime, book_start=bookStart, book_end=bookEnd,
             total_tickets=totalTickets, status=status, remain_tickets=remainTickets)
@@ -149,8 +177,8 @@ class ActivityDetails(APIView):
         self.check_input("id")
         activity_id = self.input["id"]
         try:
-            activity = models.Activity.objects.get(id=activity_id)
-            usedTickets = len(models.Ticket.objects.filter(status=models.Ticket.STATUS_USED, activity=activity))
+            activity = Activity.objects.get(id=activity_id)
+            usedTickets = len(Ticket.objects.filter(status=Ticket.STATUS_USED, activity=activity))
             activity_details = {
                 "name": activity.name,
                 "key": activity.key,
@@ -174,15 +202,15 @@ class ActivityDetails(APIView):
     def post(self):
 
         if not self.request.user.is_authenticated():
-            raise ValidateError("You have not rights to get activity list, please login!")
+            raise ValidateError("请先登录")
 
         self.check_input("id", "name", "place", "description", "picUrl", "startTime",
                          "endTime", "bookStart", "bookEnd", "totalTickets", "status")
         activity_id = self.input["id"]
         status = self.input["status"]
         try:
-            activity = models.Activity.objects.get(id=activity_id)
-            if activity.status != models.Activity.STATUS_PUBLISHED:
+            activity = Activity.objects.get(id=activity_id)
+            if activity.status != Activity.STATUS_PUBLISHED:
                 activity.name = self.input["name"]
                 activity.place = self.input["place"]
                 activity.book_start = self.input["bookStart"]
@@ -194,7 +222,7 @@ class ActivityDetails(APIView):
                 activity.start_time = self.input["startTime"]
                 activity.end_time = self.input["endTime"]
                 activity.save()
-                activity = models.Activity.objects.get(id=activity_id)
+                activity = Activity.objects.get(id=activity_id)
 
             if activity.start_time > timezone.now():
                 activity.book_end = self.input["bookEnd"]
@@ -215,7 +243,7 @@ class ActivityCheckIn(APIView):
     def post(self):
 
         if not self.request.user.is_authenticated():
-            raise ValidateError("Please login!")
+            raise ValidateError("请先登录")
 
         self.check_input("actId")
         if "ticket" in self.input:
@@ -227,7 +255,7 @@ class ActivityCheckIn(APIView):
         unique_id = self.input["ticket"]
 
         if studentId == None and unique_id == None:
-            raise ValidateError("info loss")
+            raise ValidateError("信息丢失")
 
         try:
             if studentId != None:
