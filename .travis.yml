@@ -2,8 +2,8 @@ language: python
 python:
   - "3.5.2"
 install: 
-  - pip install django
+  - pip install -r requirements.txt
 script:
-  - python django_check.py
+  - sudo python manage.py runserver 0.0.0.0:80
 env:
   - DB = mysql
