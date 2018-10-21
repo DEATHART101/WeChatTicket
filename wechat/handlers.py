@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 from wechat.wrapper import WeChatHandler
-
-
+from wechat.models import Activity,Ticket
+from WeChatTicket import settings
 __author__ = "Epsirom"
 
 
@@ -65,3 +65,23 @@ class BookEmptyHandler(WeChatHandler):
 
     def handle(self):
         return self.reply_text(self.get_message('book_empty'))
+
+
+class BookWhatHandle(WeChatHandler):
+
+    def check(self):
+        return self.is_text('抢什么') or self.is_event_click(self.view.event_keys['book_what'])
+
+    def handle(self):
+        activities = Activity.objects.filter(status=Activity.STATUS_PUBLISHED)
+        acticles = []
+        if not activities:
+            return self.reply_text("目前不能进行抢票")
+        if activities.exits():
+            for activity in activities:
+                acticles.append({'Title': activity.name,
+                'Description': activity.description,
+                'Time': "抢票时间：" + activity.start_time + "-" + activity.end_time,
+                'url': settings.url("/u/activity/", {"id":activity.id}),
+                'PicUrl': activity.pic_url})
+            return self.reply_news(acticles)

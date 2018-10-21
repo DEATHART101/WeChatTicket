@@ -38,7 +38,7 @@ WECHAT_TOKEN = CONFIGS['WECHAT_TOKEN']
 WECHAT_APPID = CONFIGS['WECHAT_APPID']
 WECHAT_SECRET = CONFIGS['WECHAT_SECRET']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['747709.iterator-traits.com', '123.207.173.22', '127.0.0.1']
 
 
 # Application definition
@@ -56,11 +56,11 @@ INSTALLED_APPS = [
     'userpage',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

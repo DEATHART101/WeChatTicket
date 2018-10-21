@@ -1,4 +1,8 @@
 from django.test import TestCase
+<<<<<<< HEAD
+
+# Create your tests here.
+=======
 from django.test.client import Client
 from django.utils import unittest
 from django.utils import timezone
@@ -103,3 +107,4 @@ class ActivityDeleteTest(TestCase):
         self.client.post('/api/a/login', {'username': 'root', 'password': 'xqws2018'})
         response = self.client.get('/api/a/activity/delete', {'id': ActivityDel.id})
         self.assertEqual(response.json()['code'], 0)
+>>>>>>> origin/hyou
