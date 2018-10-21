@@ -1,6 +1,9 @@
 language: python
 install: true
 script:
+  - sudo apt-get install uwsgi
+  - sudo apt-get install nginx
+  - sudo apt-get install django
   - sudo python manage.py runserver 0.0.0.0:80
 env:
   - DB = mysql
