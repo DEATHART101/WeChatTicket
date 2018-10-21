@@ -66,9 +66,4 @@ target/
 
 # Custom files
 /configs.json
-.vs/VSWorkspaceState.json
-.vs/ProjectSettings.json
-.vs/ProjectSettings.json
-.vs/ProjectSettings.json
-.vs/slnx.sqlite
-.vs/WeChatTicket/v15/.suo
+.vs
