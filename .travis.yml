@@ -2,10 +2,11 @@ language: python
 python:
   - "3.5.2"
 install: 
-  - sudo apt-get install uwsgi
-  - sudo apt-get install nginx
   - pip install django
 script:
-  - sudo python3.5 manage.py runserver 0.0.0.0:80
+  - python --version
+  - python
+  - import django
+  - django.VERSION
 env:
   - DB = mysql
