@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^activity/detail$', ActivityDetails.as_view()),
     url(r'^image/upload$', ActivityImageUpload.as_view()),
     url(r'^activity/checkin$', ActivityCheckIn.as_view()),
+    url(r'^activity/menu/?$', Upgrade_menu.as_view()),
 ]
