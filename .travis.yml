@@ -6,6 +6,6 @@ install:
   - sudo apt-get install nginx
   - pip install django
 script:
-  - sudo python manage.py runserver 0.0.0.0:80
+  - sudo python3.5 manage.py runserver 0.0.0.0:80
 env:
   - DB = mysql
