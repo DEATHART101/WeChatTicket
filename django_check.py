@@ -1,3 +1,3 @@
 import django
 
-django.VERSION
+print (django.VERSION)
