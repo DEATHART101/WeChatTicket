@@ -1,11 +1,18 @@
 language: python
 python:
   - "3.5.2"
+service:
+  - mysql
+before_install: # 注意需要先创建一个与你程序运行需要数据库名
+  - mysql -e 'wechat_ticket'
+before_script:
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('123456') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 install: 
   - pip install pymysql
   - pip install requests
   - pip install -r requirements.txt
 script:
+  - python manage.py migrate
   - python manage.py runserver 0.0.0.0:80
 env:
   - DB = mysql
