@@ -2,10 +2,10 @@ language: python
 python:
   - "3.5.2"
 install: 
-  - pip uninstall django
+  - pip insatll pymysql
+  - pip insatll requests
   - pip install -r requirements.txt
 script:
   - python manage.py runserver 0.0.0.0:80
-  - sudo python django_check.py
 env:
   - DB = mysql
