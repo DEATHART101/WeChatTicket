@@ -13,6 +13,6 @@ install:
   - pip install -r requirements.txt
 script:
   - python manage.py migrate
-  - python manage.py runserver 0.0.0.0:80
+  - python manage.py runserver 0.0.0.0:8000
 env:
   - DB = mysql
