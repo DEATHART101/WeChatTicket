@@ -1,8 +1,6 @@
 from django.test import TestCase
-<<<<<<< HEAD
 
 # Create your tests here.
-=======
 from django.test.client import Client
 from django.utils import unittest
 from django.utils import timezone
@@ -18,6 +16,7 @@ ActivityDel = Activity(name='act_del', key ='delete', description='deleted activ
     2018, 3, 1, 1, 20, 30, 10, tzinfo=timezone.utc), end_time=datetime.datetime(2018, 3, 2, 30, 30, 10, tzinfo=timezone.utc),
     place='place1', book_start=datetime.datetime(2018, 2, 1, 20, 30, 10,tzinfo=timezone.utc),
    book_end=datetime.datetime(2018, 2, 2, 20, 30, 10, tzinfo=timezone.utc), total_tickets=5000, status=0)
+
 class LoginGetTest(TestCase):
     def setUp(self):
         User.objects.create_superuser(username='root', email='xz1526003@163.com', password='xqws2018')
@@ -107,4 +106,3 @@ class ActivityDeleteTest(TestCase):
         self.client.post('/api/a/login', {'username': 'root', 'password': 'xqws2018'})
         response = self.client.get('/api/a/activity/delete', {'id': ActivityDel.id})
         self.assertEqual(response.json()['code'], 0)
->>>>>>> origin/hyou

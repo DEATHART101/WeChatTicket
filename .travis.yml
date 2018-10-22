@@ -5,14 +5,15 @@ service:
   - mysql
 before_install:
   - mysql -e 'CREATE DATABASE wechat_ticket;'
-before_script:
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('123456') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 install: 
   - pip install pymysql
   - pip install requests
   - pip install -r requirements.txt
-script:
+before_script:
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('123456') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - python manage.py migrate
-  - python manage.py runserver 0.0.0.0:8000
+script:
+  #- python manage.py runserver 0.0.0.0:8000
+  - python manage.py test
 env:
   - DB = mysql

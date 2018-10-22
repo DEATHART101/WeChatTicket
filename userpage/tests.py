@@ -1,8 +1,6 @@
 from django.test import TestCase
-<<<<<<< HEAD
 
 # Create your tests here.
-=======
 from adminpage.views import *
 from django.test.client import Client
 from django.utils import timezone
@@ -42,4 +40,3 @@ class UserBindTest(TestCase):
     def test_no_student_id_bind_post(self):
         response = self.client.post('/api/u/user/bind', {'openid': 'no_student_id_bind', 'password': '1111'})
         self.assertEqual(response.json()['code'], 1)
->>>>>>> origin/hyou

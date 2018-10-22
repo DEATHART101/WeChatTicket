@@ -1,8 +1,6 @@
 from django.test import TestCase
-<<<<<<< HEAD
 
 # Create your tests here.
-=======
 from django.test.client import Client
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -18,4 +16,3 @@ class WechatGetTest(TestCase):
     def test_login_get(self):
         response = self.client.get('/api/a/login')
         self.assertEqual(response.json()['code'], 0)
->>>>>>> origin/hyou
